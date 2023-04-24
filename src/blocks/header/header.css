@@ -1,0 +1,11 @@
+.header {
+  padding: 28px 30px;
+  border-bottom: 1px solid var(--bor-section-color);
+}
+
+@media screen and (min-width: 700px) {
+  .header {
+    margin: 0 40px;
+    padding: 41px 0;
+  }
+}
