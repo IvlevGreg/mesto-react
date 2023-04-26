@@ -7,6 +7,15 @@
 @import url("./variables/color-text.css");
 @import url("./variables/color-border.css");
 
+.h-w-100{
+    width: 100%;
+}
+
+body{
+    color: var(--text-color-main);
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+}
+
 /* fonts */
 @import url("./fonts/fonts.css");
 
@@ -71,7 +80,7 @@
 @import url("./blocks/popup/__img/popup__img.css");
 @import url("./blocks/popup/_card/popup_card.css");
 @import url("./blocks/popup/_opened/popup_opened.css");
-
+@import url("./blocks/popup/_closing/popup_closing.css");
 
 @import url("./blocks/profile/profile.css");
 @import url("./blocks/profile/__add-button/profile__add-button.css");
@@ -82,6 +91,6 @@
 @import url("./blocks/profile/__text-container/profile__text-container.css");
 @import url("./blocks/profile/__title/profile__title.css");
 
-.h-w-100{
-    width: 100%;
-}
+
+
+
