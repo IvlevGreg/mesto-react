@@ -1,4 +1,4 @@
-import { CardsItem } from './CardsItem'
+import { Card } from './Card'
 import { CardsLoader } from './CardsLoader'
 
 export function CardsList({ cards, status, userStatus }) {
@@ -25,7 +25,7 @@ export function CardsList({ cards, status, userStatus }) {
   return (
     <ul className="place__list">
       {cards.map((card) => (
-        <CardsItem key={card._id} {...card} />
+        <Card key={card._id} {...card} />
       ))}
     </ul>
   )

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import IconRemoveCard from '../images/icons/icon-remove-card.svg'
 import { ImagePopup } from './shared/ImagePopup'
 
-export function CardsItem({ likes, link, name }) {
+export function Card({ likes, link, name }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false)
 
   return (
