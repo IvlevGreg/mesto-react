@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Modal } from './shared/Modal'
+import { PopupWithForm } from './shared/PopupWithForm'
 import { UserLoader } from './UserLoader'
 
 export function User({ user, status }) {
@@ -41,126 +41,72 @@ export function User({ user, status }) {
         onClick={() => setIsPopupCardCreateOpen(true)}
       ></button>
 
-      <Modal
+      <PopupWithForm
         isOpen={isPopupEditProfileOpen}
         onClose={() => setIsPopupEditProfileOpen(false)}
-      >
-        <h2 className="popup__title">Редактировать профиль</h2>
-        <form
-          name="edit-form"
-          className="popup-form popup-form_edit popup__popup-form"
-          noValidate
-        >
-          <fieldset className="popup-form__fieldset">
-            <label className="popup-form__label">
-              <input
-                type="text"
-                className="popup-form__input popup-form__input_name"
-                name="name"
-                placeholder="Имя"
-                required
-                minLength="2"
-                maxLength="40"
-              />
-              <span className="popup-form__input-error"></span>
-            </label>
+        title="Редактировать профиль"
+        btnText="Сохранить"
+        inputs={[
+          {
+            type: 'text',
+            name: 'name',
+            placeholder: 'Имя',
+            required: true,
+            minLength: '2',
+            maxLength: '40',
+          },
+          {
+            type: 'text',
+            name: 'about',
+            placeholder: 'Описание',
+            required: true,
+            minLength: '2',
+            maxLength: '200',
+          },
+        ]}
+      />
 
-            <label className="popup-form__label">
-              <input
-                type="text"
-                className="popup-form__input popup-form__input_descr"
-                name="about"
-                placeholder="Описание"
-                required
-                minLength="2"
-                maxLength="200"
-              />
-              <span className="popup-form__input-error"></span>
-            </label>
-          </fieldset>
-          <button type="submit" className="popup-form__submit-button">
-            Сохранить
-          </button>
-        </form>
-      </Modal>
-
-      <Modal
+      <PopupWithForm
+        disabled
         isOpen={isPopupCardCreateOpen}
         onClose={() => setIsPopupCardCreateOpen(false)}
-      >
-        <h2 className="popup__title">Новое место</h2>
-        <form
-          name="create-form"
-          className="popup-form popup-form_create popup__popup-form"
-          noValidate
-        >
-          <fieldset className="popup-form__fieldset">
-            <label className="popup-form__label">
-              <input
-                type="text"
-                className="popup-form__input popup-form__input_img-name"
-                name="name"
-                placeholder="Название"
-                required
-                minLength="2"
-                maxLength="30"
-              />
-              <span className="popup-form__input-error"></span>
-            </label>
+        title="Новое место"
+        btnText="Создать"
+        inputs={[
+          {
+            type: 'text',
+            className: 'popup-form__input popup-form__input_img-name',
+            name: 'name',
+            placeholder: 'Название',
+            required: true,
+            minLength: '2',
+            maxLength: '30',
+          },
+          {
+            type: 'url',
+            name: 'link',
+            placeholder: 'Ссылка на картинку',
+            required: true,
+          },
+        ]}
+      />
 
-            <label className="popup-form__label">
-              <input
-                type="url"
-                className="popup-form__input popup-form__input_link"
-                name="link"
-                placeholder="Ссылка на картинку"
-                required
-              />
-              <span className="popup-form__input-error"></span>
-            </label>
-          </fieldset>
-          <button
-            type="submit"
-            className="popup-form__submit-button popup-form__submit-button_disabled"
-            disabled
-          >
-            Создать
-          </button>
-        </form>
-      </Modal>
-
-      <Modal
+      <PopupWithForm
+        disabled
         isOpen={isPopupEditAvatarOpen}
         onClose={() => setIsPopupEditAvatarOpen(false)}
-      >
-        <h2 className="popup__title">Обновить аватар</h2>
-        <form
-          name="create-form"
-          className="popup-form popup-form_create popup__popup-form"
-          noValidate
-        >
-          <fieldset className="popup-form__fieldset">
-            <label className="popup-form__label">
-              <input
-                type="url"
-                className="popup-form__input popup-form__input_link"
-                name="avatar"
-                placeholder="Ссылка на автар"
-                required
-              />
-              <span className="popup-form__input-error"></span>
-            </label>
-          </fieldset>
-
-          <button
-            type="submit"
-            className="popup-form__submit-button popup-form__submit-button_disabled"
-            disabled
-          >
-            Сохранить
-          </button>
-        </form>
-      </Modal>
+        title="Обновить аватар"
+        btnText="Сохранить"
+        inputs={[
+          {
+            type: 'url',
+            className: 'popup-form__input popup-form__input_link',
+            name: 'avatar',
+            placeholder: 'Ссылка на автар',
+            required: true,
+          },
+        ]}
+      />
     </section>
   )
 }

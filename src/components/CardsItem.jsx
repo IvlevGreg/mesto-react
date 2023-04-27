@@ -1,6 +1,10 @@
+import { useState } from 'react'
 import IconRemoveCard from '../images/icons/icon-remove-card.svg'
+import { ImagePopup } from './shared/ImagePopup'
 
 export function CardsItem({ likes, link, name }) {
+  const [isPopupOpen, setIsPopupOpen] = useState(false)
+
   return (
     <li className="place__item">
       <button type="button" className="remove-button place__remove-button">
@@ -11,7 +15,11 @@ export function CardsItem({ likes, link, name }) {
         />
       </button>
 
-      <button type="button" className="place__open-popup-button">
+      <button
+        type="button"
+        onClick={() => setIsPopupOpen(true)}
+        className="place__open-popup-button"
+      >
         <img src={link} alt={name} className="place__img" />
       </button>
 
@@ -25,6 +33,13 @@ export function CardsItem({ likes, link, name }) {
           <p className="place__like-amount">{likes.length}</p>
         </div>
       </div>
+
+      <ImagePopup
+        src={link}
+        name={name}
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+      />
     </li>
   )
 }

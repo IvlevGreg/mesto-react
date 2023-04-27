@@ -32,3 +32,15 @@
     line-height: 22px;
   }
 }
+
+.popup-form__submit-button:disabled {
+  opacity: 0.2;
+
+  cursor: initial;
+}
+
+.popup-form__submit-button:disabled:hover,
+.popup-form__submit-button:disabled:active {
+  opacity: 0.2;
+}
+
