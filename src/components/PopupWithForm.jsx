@@ -25,31 +25,6 @@ export function PopupWithForm({
 
   const popupRef = useRef(null)
 
-  //   function close() {
-  //     popup.classList.remove('popup_opened')
-  //     document.body.classList.remove('pages_popup-opened')
-
-  //     document.removeEventListener('keyup', handleEscClose)
-  //   }
-
-  //   function handleOutsidePopup(evt) {
-  //     if (evt.target === popup) {
-  //       close()
-  //     }
-  //   }
-
-  //   function setEventListeners() {
-  //     popup.addEventListener('mousedown', (evt) => handleOutsidePopup(evt))
-  //     buttonClose.addEventListener('click', () => close())
-  //   }
-
-  //   function open() {
-  //     popup.classList.add('popup_opened')
-  //     document.body.classList.add('pages_popup-opened')
-
-  //     document.addEventListener('keyup', handleEscClose)
-  //   }
-
   return (
     <div
       className={classNames(
