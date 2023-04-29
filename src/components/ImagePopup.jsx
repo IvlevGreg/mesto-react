@@ -18,9 +18,6 @@ export function ImagePopup({ card, className, onClose, isOpen }) {
 
   const popupRef = useRef(null)
   if (isOpen && !card) throw new Error('По карточке нет данных')
-  if (!card) return null
-
-  const { name, link } = card
 
   return (
     <div
@@ -42,8 +39,8 @@ export function ImagePopup({ card, className, onClose, isOpen }) {
           className="close-button popup__close-button popup__close-button_card"
           onClick={onClose}
         ></button>
-        <img src={link} alt={name} className="popup__img" />
-        <h2 className="popup__name">{name}</h2>
+        <img src={card?.link} alt={card?.name} className="popup__img" />
+        <h2 className="popup__name">{card?.name}</h2>
       </div>
     </div>
   )
