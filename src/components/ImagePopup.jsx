@@ -17,7 +17,7 @@ export function ImagePopup({ card, className, onClose, isOpen }) {
   }, [])
 
   const popupRef = useRef(null)
-  if (!card) return null
+  if (!card) throw new Error('По карточке нет данных')
 
   const { name, link } = card
 
