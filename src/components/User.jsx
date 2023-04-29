@@ -1,8 +1,12 @@
-import { useState } from 'react'
-import { PopupWithForm } from './shared/PopupWithForm'
 import { UserLoader } from './UserLoader'
 
-export function User({ user, status }) {
+export function User({
+  user,
+  status,
+  handleEditAvatarClick,
+  handleEditProfileClick,
+  handleAddPlaceClick,
+}) {
   if (status === 'loading') {
     return <UserLoader className="h-w-100" />
   }
@@ -12,16 +16,10 @@ export function User({ user, status }) {
   }
 
   const { avatar, name, about } = user
-  const [isPopupEditProfileOpen, setIsPopupEditProfileOpen] = useState(false)
-  const [isPopupEditAvatarOpen, setIsPopupEditAvatarOpen] = useState(false)
-  const [isPopupCardCreateOpen, setIsPopupCardCreateOpen] = useState(false)
 
   return (
     <section className="profile">
-      <button
-        className="profile__img-btn"
-        onClick={() => setIsPopupEditAvatarOpen(true)}
-      >
+      <button className="profile__img-btn" onClick={handleEditAvatarClick}>
         <img className="profile__img" src={avatar} alt={name} />
       </button>
 
@@ -30,7 +28,7 @@ export function User({ user, status }) {
         <button
           type="button"
           className="profile__edit-button edit-button"
-          onClick={() => setIsPopupEditProfileOpen(true)}
+          onClick={handleEditProfileClick}
         ></button>
         <p className="profile__descr">{about}</p>
       </div>
@@ -38,75 +36,8 @@ export function User({ user, status }) {
       <button
         type="button"
         className="add-button profile__add-button"
-        onClick={() => setIsPopupCardCreateOpen(true)}
+        onClick={handleAddPlaceClick}
       ></button>
-
-      <PopupWithForm
-        isOpen={isPopupEditProfileOpen}
-        onClose={() => setIsPopupEditProfileOpen(false)}
-        title="Редактировать профиль"
-        btnText="Сохранить"
-        inputs={[
-          {
-            type: 'text',
-            name: 'name',
-            placeholder: 'Имя',
-            required: true,
-            minLength: '2',
-            maxLength: '40',
-          },
-          {
-            type: 'text',
-            name: 'about',
-            placeholder: 'Описание',
-            required: true,
-            minLength: '2',
-            maxLength: '200',
-          },
-        ]}
-      />
-
-      <PopupWithForm
-        disabled
-        isOpen={isPopupCardCreateOpen}
-        onClose={() => setIsPopupCardCreateOpen(false)}
-        title="Новое место"
-        btnText="Создать"
-        inputs={[
-          {
-            type: 'text',
-            className: 'popup-form__input popup-form__input_img-name',
-            name: 'name',
-            placeholder: 'Название',
-            required: true,
-            minLength: '2',
-            maxLength: '30',
-          },
-          {
-            type: 'url',
-            name: 'link',
-            placeholder: 'Ссылка на картинку',
-            required: true,
-          },
-        ]}
-      />
-
-      <PopupWithForm
-        disabled
-        isOpen={isPopupEditAvatarOpen}
-        onClose={() => setIsPopupEditAvatarOpen(false)}
-        title="Обновить аватар"
-        btnText="Сохранить"
-        inputs={[
-          {
-            type: 'url',
-            className: 'popup-form__input popup-form__input_link',
-            name: 'avatar',
-            placeholder: 'Ссылка на автар',
-            required: true,
-          },
-        ]}
-      />
     </section>
   )
 }
