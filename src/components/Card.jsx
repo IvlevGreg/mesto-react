@@ -1,7 +1,8 @@
 import IconRemoveCard from '../images/icons/icon-remove-card.svg'
 
-export function Card({ likes, link, name, onCardClick }) {
-  const handleCardClick = () => onCardClick({ name, link })
+export function Card({ card, onCardClick }) {
+  const { likes, link, name } = card
+  const handleCardClick = () => onCardClick(card)
 
   return (
     <li className="place__item">

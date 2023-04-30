@@ -1,43 +1,25 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api } from '../utils/Api'
 import { CardsList } from './CardsList'
-import { PopupWithForm } from './PopupWithForm'
-import { ImagePopup } from './ImagePopup'
 import { User } from './User'
 
 export function Main({
   onEditProfile,
   onAddPlace,
   onEditAvatar,
-  isEditProfilePopupOpen,
-  isAddPlacePopupOpen,
-  isEditAvatarPopupOpen,
-  selectedCard,
   setSelectedCard,
-  setIsCardPopupOpen,
-  isCardPopupOpen,
 }) {
   const [user, setUser] = useState(null)
-  const [userStatus, setUserStatus] = useState('loading')
+  const [userStatus, setUserStatus] = useState('initial')
   const [cards, setCards] = useState(null)
-  const [cardsStatus, setCardsStatus] = useState('loading')
-
-  const handleEditProfileClick = useCallback(() => onEditProfile(true), [])
-  const handleAddPlaceClick = useCallback(() => onAddPlace(true), [])
-  const handleEditAvatarClick = useCallback(() => onEditAvatar(true), [])
+  const [cardsStatus, setCardsStatus] = useState('initial')
 
   const onCardClick = useCallback((card) => {
-    setIsCardPopupOpen(true)
     setSelectedCard(card)
   }, [])
 
-  const onCloseCardPopup = useCallback(() => {
-    setIsCardPopupOpen(false)
-    setSelectedCard(null)
-  }, [])
-
   useEffect(() => {
-    if (user) return
+    if (user || userStatus !== 'initial') return
     setUserStatus('loading')
     setCardsStatus('loading')
     api
@@ -55,7 +37,7 @@ export function Main({
           .catch(() => setCardsStatus('error'))
       })
       .catch(() => setUserStatus('error'))
-  }, [user])
+  }, [user, userStatus])
 
   return (
     <main className="main">
@@ -63,9 +45,9 @@ export function Main({
         <User
           user={user}
           status={userStatus}
-          handleEditProfileClick={handleEditProfileClick}
-          handleAddPlaceClick={handleAddPlaceClick}
-          handleEditAvatarClick={handleEditAvatarClick}
+          handleEditProfileClick={onEditProfile}
+          handleAddPlaceClick={onAddPlace}
+          handleEditAvatarClick={onEditAvatar}
         />
         <CardsList
           cards={cards}
@@ -74,119 +56,6 @@ export function Main({
           userStatus={userStatus}
         />
       </section>
-
-      <PopupWithForm
-        title="Редактировать профиль"
-        name="edit-form"
-        onClose={() => onEditProfile(false)}
-        isOpen={isEditProfilePopupOpen}
-      >
-        <fieldset className="popup-form__fieldset">
-          <label className="popup-form__label">
-            <input
-              type="text"
-              className="popup-form__input popup-form__input_name"
-              name="name"
-              placeholder="Имя"
-              required
-              minLength="2"
-              maxLength="40"
-            />
-            <span className="popup-form__input-error"></span>
-          </label>
-
-          <label className="popup-form__label">
-            <input
-              type="text"
-              className="popup-form__input popup-form__input_descr"
-              name="about"
-              placeholder="Описание"
-              required
-              minLength="2"
-              maxLength="200"
-            />
-            <span className="popup-form__input-error"></span>
-          </label>
-        </fieldset>
-        <button type="submit" className="popup-form__submit-button">
-          Сохранить
-        </button>
-      </PopupWithForm>
-
-      <PopupWithForm
-        title="Новое место"
-        name="create-form"
-        onClose={() => onAddPlace(false)}
-        isOpen={isAddPlacePopupOpen}
-      >
-        <fieldset className="popup-form__fieldset">
-          <label className="popup-form__label">
-            <input
-              type="text"
-              className="popup-form__input popup-form__input_img-name"
-              name="name"
-              placeholder="Название"
-              required
-              minLength="2"
-              maxLength="30"
-            />
-            <span className="popup-form__input-error"></span>
-          </label>
-
-          <label className="popup-form__label">
-            <input
-              type="url"
-              className="popup-form__input popup-form__input_link"
-              name="link"
-              placeholder="Ссылка на картинку"
-              required
-            />
-            <span className="popup-form__input-error"></span>
-          </label>
-        </fieldset>
-        <button
-          type="submit"
-          className="popup-form__submit-button popup-form__submit-button_disabled"
-          disabled
-        >
-          Создать
-        </button>
-      </PopupWithForm>
-
-      <PopupWithForm
-        title="Обновить аватар"
-        name="create-form"
-        onClose={() => onEditAvatar(false)}
-        isOpen={isEditAvatarPopupOpen}
-      >
-        <fieldset className="popup-form__fieldset">
-          <label className="popup-form__label">
-            <input
-              type="url"
-              className="popup-form__input popup-form__input_link"
-              name="avatar"
-              placeholder="Ссылка на автар"
-              required
-            />
-            <span className="popup-form__input-error"></span>
-          </label>
-        </fieldset>
-
-        <button
-          type="submit"
-          className="popup-form__submit-button popup-form__submit-button_disabled"
-          disabled
-        >
-          Сохранить
-        </button>
-      </PopupWithForm>
-
-      <ImagePopup
-        open={isCardPopupOpen}
-        isOpen={isCardPopupOpen}
-        onClose={onCloseCardPopup}
-        card={selectedCard}
-      />
     </main>
   )
 }

@@ -1,7 +1,7 @@
 export class Api {
-  constructor({ baseUrl, headers: { authorization } }) {
+  constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl
-    this._authorization = authorization
+    this._headers = headers
 
     this.putLike = this.putLike.bind(this)
     this.deleteLike = this.deleteLike.bind(this)
@@ -14,9 +14,7 @@ export class Api {
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: {
-        authorization: this._authorization,
-      },
+      headers: this._headers,
     }).then(this._parseJson)
   }
 
@@ -37,45 +35,34 @@ export class Api {
   removeCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._authorization,
-      },
+      headers: this._headers,
     }).then(this._parseJson)
   }
 
   putLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
-      headers: {
-        authorization: this._authorization,
-      },
+      headers: this._headers,
     }).then(this._parseJson)
   }
 
   deleteLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
-      headers: {
-        authorization: '7a43c762-4e63-438c-856b-e056a5084ee3',
-      },
+      headers: this._headers,
     }).then(this._parseJson)
   }
 
   getUserdata() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        authorization: this._authorization,
-      },
+      headers: this._headers,
     }).then(this._parseJson)
   }
 
   updateUserData({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': 'application/json',
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name,
         about,
@@ -86,10 +73,7 @@ export class Api {
   updateUserImg({ avatar }) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': 'application/json',
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar,
       }),

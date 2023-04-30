@@ -25,7 +25,7 @@ export function CardsList({ cards, status, userStatus, onCardClick }) {
   return (
     <ul className="place__list">
       {cards.map((card) => (
-        <Card key={card._id} {...card} onCardClick={onCardClick} />
+        <Card key={card._id} card={card} onCardClick={onCardClick} />
       ))}
     </ul>
   )

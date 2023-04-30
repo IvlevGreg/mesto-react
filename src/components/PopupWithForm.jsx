@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
 export function PopupWithForm({
   children,
@@ -8,21 +8,9 @@ export function PopupWithForm({
   className,
   onClose,
   isOpen,
+  btnText,
+  isDisabled = false,
 }) {
-  useEffect(() => {
-    if (isOpen) {
-      window.addEventListener('keydown', handleEscClose)
-    }
-
-    function handleEscClose(evt) {
-      if (evt.key == 'Escape') {
-        onClose()
-      }
-    }
-
-    return window.removeEventListener('keydown', handleEscClose)
-  }, [])
-
   const popupRef = useRef(null)
 
   return (
@@ -34,7 +22,6 @@ export function PopupWithForm({
         className
       )}
       ref={popupRef}
-      //TODO: проверить что обработчик удаляется
       onMouseDown={(evt) => {
         if (evt.target === popupRef.current) onClose()
       }}
@@ -54,6 +41,14 @@ export function PopupWithForm({
             noValidate
           >
             {children}
+
+            <button
+              type="submit"
+              className="popup-form__submit-button"
+              disabled={isDisabled}
+            >
+              {btnText}
+            </button>
           </form>
         </div>
       </div>
