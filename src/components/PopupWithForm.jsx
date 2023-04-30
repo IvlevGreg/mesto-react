@@ -8,6 +8,8 @@ export function PopupWithForm({
   className,
   onClose,
   isOpen,
+  btnText,
+  isDisabled = false,
 }) {
   useEffect(() => {
     if (isOpen) {
@@ -54,6 +56,14 @@ export function PopupWithForm({
             noValidate
           >
             {children}
+
+            <button
+              type="submit"
+              className="popup-form__submit-button"
+              disabled={isDisabled}
+            >
+              {btnText}
+            </button>
           </form>
         </div>
       </div>

@@ -80,6 +80,7 @@ export function Main({
         name="edit-form"
         onClose={() => onEditProfile(false)}
         isOpen={isEditProfilePopupOpen}
+        btnText="Сохранить"
       >
         <fieldset className="popup-form__fieldset">
           <label className="popup-form__label">
@@ -108,9 +109,6 @@ export function Main({
             <span className="popup-form__input-error"></span>
           </label>
         </fieldset>
-        <button type="submit" className="popup-form__submit-button">
-          Сохранить
-        </button>
       </PopupWithForm>
 
       <PopupWithForm
@@ -118,6 +116,8 @@ export function Main({
         name="create-form"
         onClose={() => onAddPlace(false)}
         isOpen={isAddPlacePopupOpen}
+        btnText="Создать"
+        isDisabled
       >
         <fieldset className="popup-form__fieldset">
           <label className="popup-form__label">
@@ -144,13 +144,6 @@ export function Main({
             <span className="popup-form__input-error"></span>
           </label>
         </fieldset>
-        <button
-          type="submit"
-          className="popup-form__submit-button popup-form__submit-button_disabled"
-          disabled
-        >
-          Создать
-        </button>
       </PopupWithForm>
 
       <PopupWithForm
@@ -158,6 +151,8 @@ export function Main({
         name="create-form"
         onClose={() => onEditAvatar(false)}
         isOpen={isEditAvatarPopupOpen}
+        btnText="Сохранить"
+        isDisabled
       >
         <fieldset className="popup-form__fieldset">
           <label className="popup-form__label">
@@ -171,14 +166,6 @@ export function Main({
             <span className="popup-form__input-error"></span>
           </label>
         </fieldset>
-
-        <button
-          type="submit"
-          className="popup-form__submit-button popup-form__submit-button_disabled"
-          disabled
-        >
-          Сохранить
-        </button>
       </PopupWithForm>
 
       <ImagePopup
