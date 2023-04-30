@@ -8,7 +8,6 @@ export function Main({
   onAddPlace,
   onEditAvatar,
   setSelectedCard,
-  setIsCardPopupOpen,
 }) {
   const [user, setUser] = useState(null)
   const [userStatus, setUserStatus] = useState('loading')
@@ -20,7 +19,6 @@ export function Main({
   const handleEditAvatarClick = useCallback(() => onEditAvatar(true), [])
 
   const onCardClick = useCallback((card) => {
-    setIsCardPopupOpen(true)
     setSelectedCard(card)
   }, [])
 

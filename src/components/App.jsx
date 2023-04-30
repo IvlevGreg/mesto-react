@@ -10,15 +10,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
 
-  const [isCardPopupOpen, setIsCardPopupOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState(null)
-
-  const onCloseCardPopup = useCallback(() => {
-    setIsCardPopupOpen(false)
-    setSelectedCard(null)
-  }, [])
-
-  // TODO:
 
   const closeAllPopups = useCallback(() => {
     setIsEditProfilePopupOpen(false)
@@ -40,8 +32,6 @@ function App() {
         isAddPlacePopupOpen={isAddPlacePopupOpen}
         isEditAvatarPopupOpen={isEditAvatarPopupOpen}
         selectedCard={selectedCard}
-        setIsCardPopupOpen={setIsCardPopupOpen}
-        isCardPopupOpen={isCardPopupOpen}
         setSelectedCard={setSelectedCard}
       />
 
@@ -140,11 +130,7 @@ function App() {
         </fieldset>
       </PopupWithForm>
 
-      <ImagePopup
-        isOpen={isCardPopupOpen}
-        onClose={onCloseCardPopup}
-        card={selectedCard}
-      />
+      <ImagePopup onClose={closeAllPopups} card={selectedCard} />
     </>
   )
 }
