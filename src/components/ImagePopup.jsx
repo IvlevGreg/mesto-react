@@ -1,21 +1,7 @@
 import classNames from 'classnames'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
 export function ImagePopup({ card, className, onClose }) {
-  useEffect(() => {
-    if (card) {
-      window.addEventListener('keydown', handleEscClose)
-    }
-
-    function handleEscClose(evt) {
-      if (evt.key == 'Escape') {
-        onClose()
-      }
-    }
-
-    return window.removeEventListener('keydown', handleEscClose)
-  }, [])
-
   const popupRef = useRef(null)
   if (!card) return null
 
