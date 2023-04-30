@@ -10,16 +10,16 @@ export function Main({
   setSelectedCard,
 }) {
   const [user, setUser] = useState(null)
-  const [userStatus, setUserStatus] = useState('loading')
+  const [userStatus, setUserStatus] = useState('initial')
   const [cards, setCards] = useState(null)
-  const [cardsStatus, setCardsStatus] = useState('loading')
+  const [cardsStatus, setCardsStatus] = useState('initial')
 
   const onCardClick = useCallback((card) => {
     setSelectedCard(card)
   }, [])
 
   useEffect(() => {
-    if (user) return
+    if (user || userStatus !== 'initial') return
     setUserStatus('loading')
     setCardsStatus('loading')
     api
@@ -37,7 +37,7 @@ export function Main({
           .catch(() => setCardsStatus('error'))
       })
       .catch(() => setUserStatus('error'))
-  }, [user])
+  }, [user, userStatus])
 
   return (
     <main className="main">
