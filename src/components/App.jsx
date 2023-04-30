@@ -12,6 +12,19 @@ function App() {
 
   const [selectedCard, setSelectedCard] = useState(null)
 
+  const handleEditProfileClick = useCallback(
+    () => setIsEditProfilePopupOpen(true),
+    []
+  )
+  const handleAddPlaceClick = useCallback(
+    () => setIsEditAvatarPopupOpen(true),
+    []
+  )
+  const handleEditAvatarClick = useCallback(
+    () => setIsAddPlacePopupOpen(true),
+    []
+  )
+
   const closeAllPopups = useCallback(() => {
     setIsEditProfilePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
@@ -25,9 +38,9 @@ function App() {
       <Header />
 
       <Main
-        onEditProfile={setIsEditProfilePopupOpen}
-        onAddPlace={setIsAddPlacePopupOpen}
-        onEditAvatar={setIsEditAvatarPopupOpen}
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
         isEditProfilePopupOpen={isEditProfilePopupOpen}
         isAddPlacePopupOpen={isAddPlacePopupOpen}
         isEditAvatarPopupOpen={isEditAvatarPopupOpen}
@@ -44,33 +57,31 @@ function App() {
         isOpen={isEditProfilePopupOpen}
         btnText="Сохранить"
       >
-        <fieldset className="popup-form__fieldset">
-          <label className="popup-form__label">
-            <input
-              type="text"
-              className="popup-form__input popup-form__input_name"
-              name="name"
-              placeholder="Имя"
-              required
-              minLength="2"
-              maxLength="40"
-            />
-            <span className="popup-form__input-error"></span>
-          </label>
+        <label className="popup-form__label">
+          <input
+            type="text"
+            className="popup-form__input popup-form__input_name"
+            name="name"
+            placeholder="Имя"
+            required
+            minLength="2"
+            maxLength="40"
+          />
+          <span className="popup-form__input-error"></span>
+        </label>
 
-          <label className="popup-form__label">
-            <input
-              type="text"
-              className="popup-form__input popup-form__input_descr"
-              name="about"
-              placeholder="Описание"
-              required
-              minLength="2"
-              maxLength="200"
-            />
-            <span className="popup-form__input-error"></span>
-          </label>
-        </fieldset>
+        <label className="popup-form__label">
+          <input
+            type="text"
+            className="popup-form__input popup-form__input_descr"
+            name="about"
+            placeholder="Описание"
+            required
+            minLength="2"
+            maxLength="200"
+          />
+          <span className="popup-form__input-error"></span>
+        </label>
       </PopupWithForm>
 
       <PopupWithForm
@@ -81,31 +92,29 @@ function App() {
         btnText="Создать"
         isDisabled
       >
-        <fieldset className="popup-form__fieldset">
-          <label className="popup-form__label">
-            <input
-              type="text"
-              className="popup-form__input popup-form__input_img-name"
-              name="name"
-              placeholder="Название"
-              required
-              minLength="2"
-              maxLength="30"
-            />
-            <span className="popup-form__input-error"></span>
-          </label>
+        <label className="popup-form__label">
+          <input
+            type="text"
+            className="popup-form__input popup-form__input_img-name"
+            name="name"
+            placeholder="Название"
+            required
+            minLength="2"
+            maxLength="30"
+          />
+          <span className="popup-form__input-error"></span>
+        </label>
 
-          <label className="popup-form__label">
-            <input
-              type="url"
-              className="popup-form__input popup-form__input_link"
-              name="link"
-              placeholder="Ссылка на картинку"
-              required
-            />
-            <span className="popup-form__input-error"></span>
-          </label>
-        </fieldset>
+        <label className="popup-form__label">
+          <input
+            type="url"
+            className="popup-form__input popup-form__input_link"
+            name="link"
+            placeholder="Ссылка на картинку"
+            required
+          />
+          <span className="popup-form__input-error"></span>
+        </label>
       </PopupWithForm>
 
       <PopupWithForm
@@ -116,18 +125,16 @@ function App() {
         btnText="Сохранить"
         isDisabled
       >
-        <fieldset className="popup-form__fieldset">
-          <label className="popup-form__label">
-            <input
-              type="url"
-              className="popup-form__input popup-form__input_link"
-              name="avatar"
-              placeholder="Ссылка на автар"
-              required
-            />
-            <span className="popup-form__input-error"></span>
-          </label>
-        </fieldset>
+        <label className="popup-form__label">
+          <input
+            type="url"
+            className="popup-form__input popup-form__input_link"
+            name="avatar"
+            placeholder="Ссылка на автар"
+            required
+          />
+          <span className="popup-form__input-error"></span>
+        </label>
       </PopupWithForm>
 
       <ImagePopup onClose={closeAllPopups} card={selectedCard} />

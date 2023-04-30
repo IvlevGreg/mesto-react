@@ -14,10 +14,6 @@ export function Main({
   const [cards, setCards] = useState(null)
   const [cardsStatus, setCardsStatus] = useState('loading')
 
-  const handleEditProfileClick = useCallback(() => onEditProfile(true), [])
-  const handleAddPlaceClick = useCallback(() => onAddPlace(true), [])
-  const handleEditAvatarClick = useCallback(() => onEditAvatar(true), [])
-
   const onCardClick = useCallback((card) => {
     setSelectedCard(card)
   }, [])
@@ -49,9 +45,9 @@ export function Main({
         <User
           user={user}
           status={userStatus}
-          handleEditProfileClick={handleEditProfileClick}
-          handleAddPlaceClick={handleAddPlaceClick}
-          handleEditAvatarClick={handleEditAvatarClick}
+          handleEditProfileClick={onEditProfile}
+          handleAddPlaceClick={onAddPlace}
+          handleEditAvatarClick={onEditAvatar}
         />
         <CardsList
           cards={cards}
