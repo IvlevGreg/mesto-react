@@ -182,7 +182,6 @@ export function Main({
       </PopupWithForm>
 
       <ImagePopup
-        open={isCardPopupOpen}
         isOpen={isCardPopupOpen}
         onClose={onCloseCardPopup}
         card={selectedCard}
