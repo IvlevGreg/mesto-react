@@ -16,15 +16,13 @@ export function PopupWithForm({
       window.addEventListener('keydown', handleEscClose)
     }
 
-    function handleEscClose(evt) {
-      if (evt.key == 'Escape') {
-        onClose()
-      }
-    }
-
     return window.removeEventListener('keydown', handleEscClose)
   }, [])
-
+  function handleEscClose(evt) {
+    if (evt.key == 'Escape') {
+      onClose()
+    }
+  }
   const popupRef = useRef(null)
 
   return (
@@ -36,6 +34,7 @@ export function PopupWithForm({
         className
       )}
       ref={popupRef}
+      onKeyDown={handleEscClose}
       //TODO: проверить что обработчик удаляется
       onMouseDown={(evt) => {
         if (evt.target === popupRef.current) onClose()
