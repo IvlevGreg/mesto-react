@@ -19,7 +19,6 @@ export function Main({
   }, [])
 
   useEffect(() => {
-    if (user || userStatus !== 'initial') return
     setUserStatus('loading')
     setCardsStatus('loading')
     api
@@ -37,7 +36,7 @@ export function Main({
           .catch(() => setCardsStatus('error'))
       })
       .catch(() => setUserStatus('error'))
-  }, [user, userStatus])
+  }, [])
 
   return (
     <main className="main">
