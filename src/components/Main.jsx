@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from 'react'
-import { api } from '../utils/Api'
+import { useCallback, useContext } from 'react'
+import { CardsContext } from '../contexts/CardsContext'
+import { CurrentUserContext } from '../contexts/CurrentUserContext'
 import { CardsList } from './CardsList'
 import { User } from './User'
 
@@ -7,35 +8,15 @@ export function Main({
   onEditProfile,
   onAddPlace,
   onEditAvatar,
+  userStatus,
+  cardsStatus,
   setSelectedCard,
 }) {
-  const [user, setUser] = useState(null)
-  const [userStatus, setUserStatus] = useState('initial')
-  const [cards, setCards] = useState(null)
-  const [cardsStatus, setCardsStatus] = useState('initial')
+  const user = useContext(CurrentUserContext)
+  const cards = useContext(CardsContext)
 
   const onCardClick = useCallback((card) => {
     setSelectedCard(card)
-  }, [])
-
-  useEffect(() => {
-    setUserStatus('loading')
-    setCardsStatus('loading')
-    api
-      .getUserdata()
-      .then((data) => {
-        setUserStatus('success')
-        setUser(data)
-
-        api
-          .getInitialCards()
-          .then((data) => {
-            setCards(data)
-            setCardsStatus('success')
-          })
-          .catch(() => setCardsStatus('error'))
-      })
-      .catch(() => setUserStatus('error'))
   }, [])
 
   return (
