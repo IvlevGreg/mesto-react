@@ -18,7 +18,7 @@ export function CardsList({ cards, status, userStatus, onCardClick }) {
     )
   }
 
-  if (status === 'error' || !cards) {
+  if (status === 'error' || !cards || !Array.isArray(cards)) {
     return <h2>Упс... Что-то пошло не так</h2>
   }
 
