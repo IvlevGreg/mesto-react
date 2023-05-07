@@ -1,7 +1,13 @@
 import { Card } from './Card'
 import { CardsLoader } from './CardsLoader'
 
-export function CardsList({ cards, status, userStatus, onCardClick }) {
+export function CardsList({
+  cards,
+  status,
+  userStatus,
+  onCardClick,
+  onCardLike,
+}) {
   if (userStatus === 'error') {
     return <h2>Упс... Не удалось получить данные вашего профиля</h2>
   }
@@ -25,7 +31,12 @@ export function CardsList({ cards, status, userStatus, onCardClick }) {
   return (
     <ul className="place__list">
       {cards.map((card) => (
-        <Card key={card._id} card={card} onCardClick={onCardClick} />
+        <Card
+          key={card._id}
+          card={card}
+          onCardClick={onCardClick}
+          onCardLike={onCardLike}
+        />
       ))}
     </ul>
   )

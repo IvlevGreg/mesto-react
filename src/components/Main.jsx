@@ -1,5 +1,4 @@
 import { useCallback, useContext } from 'react'
-import { CardsContext } from '../contexts/CardsContext'
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 import { CardsList } from './CardsList'
 import { User } from './User'
@@ -10,10 +9,11 @@ export function Main({
   onEditAvatar,
   userStatus,
   cardsStatus,
+  cards,
   setSelectedCard,
+  onCardLike,
 }) {
   const user = useContext(CurrentUserContext)
-  const cards = useContext(CardsContext)
 
   const onCardClick = useCallback((card) => {
     setSelectedCard(card)
@@ -34,6 +34,7 @@ export function Main({
           onCardClick={onCardClick}
           status={cardsStatus}
           userStatus={userStatus}
+          onCardLike={onCardLike}
         />
       </section>
     </main>
