@@ -7,6 +7,7 @@ export function CardsList({
   userStatus,
   onCardClick,
   onCardLike,
+  onCardDelete,
 }) {
   if (userStatus === 'error') {
     return <h2>Упс... Не удалось получить данные вашего профиля</h2>
@@ -36,6 +37,7 @@ export function CardsList({
           card={card}
           onCardClick={onCardClick}
           onCardLike={onCardLike}
+          onCardDelete={onCardDelete}
         />
       ))}
     </ul>

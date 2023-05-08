@@ -12,6 +12,7 @@ export function Main({
   cards,
   setSelectedCard,
   onCardLike,
+  onCardDelete,
 }) {
   const user = useContext(CurrentUserContext)
 
@@ -35,6 +36,7 @@ export function Main({
           status={cardsStatus}
           userStatus={userStatus}
           onCardLike={onCardLike}
+          onCardDelete={onCardDelete}
         />
       </section>
     </main>
