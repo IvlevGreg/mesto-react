@@ -10,8 +10,12 @@ export function PopupWithForm({
   isOpen,
   btnText,
   isDisabled = false,
+  onSubmit,
 }) {
   const popupRef = useRef(null)
+  const handleSubmit = (e) => {
+    onSubmit(e)
+  }
 
   return (
     <div
@@ -39,6 +43,7 @@ export function PopupWithForm({
             name={name}
             className="popup-form popup-form_edit popup__popup-form"
             noValidate
+            onSubmit={handleSubmit}
           >
             {children}
 

@@ -3,8 +3,8 @@ export class Api {
     this._baseUrl = baseUrl
     this._headers = headers
 
-    this.putLike = this.putLike.bind(this)
-    this.deleteLike = this.deleteLike.bind(this)
+    this._putLike = this._putLike.bind(this)
+    this._deleteLike = this._deleteLike.bind(this)
     this.removeCard = this.removeCard.bind(this)
   }
 
@@ -21,10 +21,7 @@ export class Api {
   postNewCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: {
-        authorization: this._authorization,
-        ['Content-Type']: 'application/json',
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name,
         link,
@@ -39,18 +36,22 @@ export class Api {
     }).then(this._parseJson)
   }
 
-  putLike(id) {
+  _putLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
       headers: this._headers,
     }).then(this._parseJson)
   }
 
-  deleteLike(id) {
+  _deleteLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: this._headers,
     }).then(this._parseJson)
+  }
+
+  changeLikeCardStatus(id, isLiked) {
+    return isLiked ? this._deleteLike(id) : this._putLike(id)
   }
 
   getUserdata() {
