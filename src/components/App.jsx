@@ -8,11 +8,14 @@ import { Main } from './Main'
 import { EditProfilePopup } from './EditProfilePopup'
 import { EditAvatarPopup } from './EditAvatarPopup'
 import { AddPlacePopup } from './AddPlacePopup'
+import { ConfirmPopup } from './ConfirmPopup'
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false)
+  const [activeRemoveCardId, setActiveRemoveCardId] = useState(null)
   const [currentUser, setCurrentUser] = useState(false)
   const [userStatus, setUserStatus] = useState('initial')
   const [cards, setCards] = useState(null)
@@ -32,27 +35,46 @@ function App() {
     () => setIsEditAvatarPopupOpen(true),
     []
   )
+  const handleRemoveCardClick = useCallback((id) => {
+    setActiveRemoveCardId(id)
+    setIsConfirmPopupOpen(true)
+  }, [])
 
   const closeAllPopups = useCallback(() => {
     setIsEditProfilePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
     setIsAddPlacePopupOpen(false)
+    setIsConfirmPopupOpen(false)
 
     setSelectedCard(null)
   }, [])
 
   const handleCardLike = useCallback((currentCard, isLiked) => {
-    api.changeLikeCardStatus(currentCard._id, isLiked).then((newCard) => {
-      setCards((state) =>
-        state.map((card) => (card._id === currentCard._id ? newCard : card))
-      )
-    })
+    api
+      .changeLikeCardStatus(currentCard._id, isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((card) => (card._id === currentCard._id ? newCard : card))
+        )
+      })
+      .catch((error) => {
+        throw new Error(error)
+      })
   })
 
-  const handleCardDelete = useCallback((id) => {
-    api.removeCard(id).then(() => {
-      setCards((state) => state.filter((card) => card._id !== id))
-    })
+  const handleCardDelete = useCallback(() => {
+    console.log(1)
+    api
+      .removeCard(activeRemoveCardId)
+      .then(() => {
+        setCards((state) =>
+          state.filter((card) => card._id !== activeRemoveCardId)
+        )
+        closeAllPopups()
+      })
+      .catch((error) => {
+        throw new Error(error)
+      })
   })
 
   const handleUpdateUser = useCallback((user) => {
@@ -129,7 +151,7 @@ function App() {
         cards={cards}
         cardsStatus={cardsStatus}
         onCardLike={handleCardLike}
-        onCardDelete={handleCardDelete}
+        onCardDelete={handleRemoveCardClick}
       />
 
       <Footer />
@@ -152,6 +174,11 @@ function App() {
         onAddPlace={handleAddPlaceSubmit}
       />
 
+      <ConfirmPopup
+        onClose={closeAllPopups}
+        isOpen={isConfirmPopupOpen}
+        submitAction={handleCardDelete}
+      />
 
       <ImagePopup onClose={closeAllPopups} card={selectedCard} />
     </CurrentUserContext.Provider>
