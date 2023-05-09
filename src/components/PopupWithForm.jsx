@@ -54,7 +54,6 @@ export function PopupWithForm({
           <form
             name={name}
             className="popup-form popup-form_edit popup__popup-form"
-            noValidate
             onSubmit={handleSubmit}
           >
             {children}
