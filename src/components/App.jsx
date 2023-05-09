@@ -63,7 +63,6 @@ function App() {
   })
 
   const handleCardDelete = useCallback(() => {
-    console.log(1)
     api
       .removeCard(activeRemoveCardId)
       .then(() => {
@@ -94,8 +93,6 @@ function App() {
       api
         .postNewCard(card)
         .then((newCard) => {
-          console.log(newCard)
-          console.log(cards)
           setCards([newCard, ...cards])
           closeAllPopups()
         })
