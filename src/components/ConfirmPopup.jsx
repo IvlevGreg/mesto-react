@@ -3,7 +3,6 @@ import { PopupWithForm } from './PopupWithForm'
 export function ConfirmPopup({ isOpen, onClose, submitAction }) {
   function handleSubmit(e) {
     e.preventDefault()
-    console.log(2)
     submitAction()
   }
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PopupWithForm } from './PopupWithForm'
 
 export function EditAvatarPopup({ isOpen, onClose, onUpdateUser }) {
@@ -8,9 +8,12 @@ export function EditAvatarPopup({ isOpen, onClose, onUpdateUser }) {
     setAvatar(e.target.value)
   }
 
+  useEffect(() => {
+    setAvatar('')
+  }, [])
+
   function handleSubmit(e) {
     e.preventDefault()
-    setAvatar('')
 
     onUpdateUser({
       avatar,

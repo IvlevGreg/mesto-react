@@ -16,7 +16,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false)
   const [activeRemoveCardId, setActiveRemoveCardId] = useState(null)
-  const [currentUser, setCurrentUser] = useState(false)
+  const [currentUser, setCurrentUser] = useState(null)
   const [userStatus, setUserStatus] = useState('initial')
   const [cards, setCards] = useState(null)
   const [cardsStatus, setCardsStatus] = useState('initial')
@@ -63,7 +63,6 @@ function App() {
   })
 
   const handleCardDelete = useCallback(() => {
-    console.log(1)
     api
       .removeCard(activeRemoveCardId)
       .then(() => {
@@ -94,8 +93,6 @@ function App() {
       api
         .postNewCard(card)
         .then((newCard) => {
-          console.log(newCard)
-          console.log(cards)
           setCards([newCard, ...cards])
           closeAllPopups()
         })
@@ -156,29 +153,34 @@ function App() {
 
       <Footer />
 
-      <EditProfilePopup
-        onClose={closeAllPopups}
-        isOpen={isEditProfilePopupOpen}
-        onUpdateUser={handleUpdateUser}
-      />
+      {/* попапы инициализируются только если данные юзера успешно подгружены*/}
+      {userStatus === 'success' && (
+        <>
+          <EditProfilePopup
+            onClose={closeAllPopups}
+            isOpen={isEditProfilePopupOpen}
+            onUpdateUser={handleUpdateUser}
+          />
 
-      <EditAvatarPopup
-        onClose={closeAllPopups}
-        isOpen={isEditAvatarPopupOpen}
-        onUpdateUser={handleUpdateAvatar}
-      />
+          <EditAvatarPopup
+            onClose={closeAllPopups}
+            isOpen={isEditAvatarPopupOpen}
+            onUpdateUser={handleUpdateAvatar}
+          />
 
-      <AddPlacePopup
-        onClose={closeAllPopups}
-        isOpen={isAddPlacePopupOpen}
-        onAddPlace={handleAddPlaceSubmit}
-      />
+          <AddPlacePopup
+            onClose={closeAllPopups}
+            isOpen={isAddPlacePopupOpen}
+            onAddPlace={handleAddPlaceSubmit}
+          />
 
-      <ConfirmPopup
-        onClose={closeAllPopups}
-        isOpen={isConfirmPopupOpen}
-        submitAction={handleCardDelete}
-      />
+          <ConfirmPopup
+            onClose={closeAllPopups}
+            isOpen={isConfirmPopupOpen}
+            submitAction={handleCardDelete}
+          />
+        </>
+      )}
 
       <ImagePopup onClose={closeAllPopups} card={selectedCard} />
     </CurrentUserContext.Provider>

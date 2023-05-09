@@ -1,9 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PopupWithForm } from './PopupWithForm'
 
 export function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
   const [name, setName] = useState('')
   const [link, setLink] = useState('')
+
+  useEffect(() => {
+    setName('')
+    setLink('')
+  }, [])
 
   const onChangeName = (e) => {
     setName(e.target.value)
@@ -20,9 +25,6 @@ export function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       name,
       link,
     })
-
-    setName('')
-    setLink('')
   }
 
   return (
