@@ -9,6 +9,8 @@ import { EditProfilePopup } from './EditProfilePopup'
 import { EditAvatarPopup } from './EditAvatarPopup'
 import { AddPlacePopup } from './AddPlacePopup'
 import { ConfirmPopup } from './ConfirmPopup'
+import { Route, Routes } from 'react-router-dom'
+import { ProtectedRouteElement } from './ProtectedRouteElement'
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
@@ -25,15 +27,15 @@ function App() {
 
   const handleEditProfileClick = useCallback(
     () => setIsEditProfilePopupOpen(true),
-    []
+    [],
   )
   const handleAddPlaceClick = useCallback(
     () => setIsAddPlacePopupOpen(true),
-    []
+    [],
   )
   const handleEditAvatarClick = useCallback(
     () => setIsEditAvatarPopupOpen(true),
-    []
+    [],
   )
   const handleRemoveCardClick = useCallback((id) => {
     setActiveRemoveCardId(id)
@@ -54,7 +56,7 @@ function App() {
       .changeLikeCardStatus(currentCard._id, isLiked)
       .then((newCard) => {
         setCards((state) =>
-          state.map((card) => (card._id === currentCard._id ? newCard : card))
+          state.map((card) => (card._id === currentCard._id ? newCard : card)),
         )
       })
       .catch((error) => {
@@ -67,7 +69,7 @@ function App() {
       .removeCard(activeRemoveCardId)
       .then(() => {
         setCards((state) =>
-          state.filter((card) => card._id !== activeRemoveCardId)
+          state.filter((card) => card._id !== activeRemoveCardId),
         )
         closeAllPopups()
       })
@@ -100,7 +102,7 @@ function App() {
           throw new Error(error)
         })
     },
-    [cards]
+    [cards],
   )
 
   const handleUpdateAvatar = useCallback((user) => {
@@ -135,22 +137,32 @@ function App() {
       .catch(() => setUserStatus('error'))
   }, [])
 
+  const MainElement = <Main
+    onEditProfile={handleEditProfileClick}
+    onAddPlace={handleAddPlaceClick}
+    onEditAvatar={handleEditAvatarClick}
+    setSelectedCard={setSelectedCard}
+    userStatus={userStatus}
+    cards={cards}
+    cardsStatus={cardsStatus}
+    onCardLike={handleCardLike}
+    onCardDelete={handleRemoveCardClick}
+  />
+
+  const loggedIn = true
+
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header />
 
-      <Main
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        setSelectedCard={setSelectedCard}
-        userStatus={userStatus}
-        cards={cards}
-        cardsStatus={cardsStatus}
-        onCardLike={handleCardLike}
-        onCardDelete={handleRemoveCardClick}
-      />
-
+      <Routes>
+        <Route path='/sign-in' element={<div>signin</div>} />
+        <Route path='/sign-up' element={<div>signup</div>} />
+        <Route path='*' element={<ProtectedRouteElement loggedIn={loggedIn}>{MainElement}</ProtectedRouteElement>} />
+        <Route path='/log-out'
+               element={<ProtectedRouteElement loggedIn={loggedIn}><h1>log-out</h1></ProtectedRouteElement>} />
+      </Routes>
       <Footer />
 
       {/* попапы инициализируются только если данные юзера успешно подгружены*/}
