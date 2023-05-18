@@ -11,6 +11,9 @@ import { AddPlacePopup } from './AddPlacePopup'
 import { ConfirmPopup } from './ConfirmPopup'
 import { Route, Routes } from 'react-router-dom'
 import { ProtectedRouteElement } from './ProtectedRouteElement'
+import { Login } from './Login'
+import { Register } from './Register'
+import { InfoTooltip } from './InfoTooltip'
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
@@ -27,15 +30,15 @@ function App() {
 
   const handleEditProfileClick = useCallback(
     () => setIsEditProfilePopupOpen(true),
-    [],
+    []
   )
   const handleAddPlaceClick = useCallback(
     () => setIsAddPlacePopupOpen(true),
-    [],
+    []
   )
   const handleEditAvatarClick = useCallback(
     () => setIsEditAvatarPopupOpen(true),
-    [],
+    []
   )
   const handleRemoveCardClick = useCallback((id) => {
     setActiveRemoveCardId(id)
@@ -56,7 +59,7 @@ function App() {
       .changeLikeCardStatus(currentCard._id, isLiked)
       .then((newCard) => {
         setCards((state) =>
-          state.map((card) => (card._id === currentCard._id ? newCard : card)),
+          state.map((card) => (card._id === currentCard._id ? newCard : card))
         )
       })
       .catch((error) => {
@@ -69,7 +72,7 @@ function App() {
       .removeCard(activeRemoveCardId)
       .then(() => {
         setCards((state) =>
-          state.filter((card) => card._id !== activeRemoveCardId),
+          state.filter((card) => card._id !== activeRemoveCardId)
         )
         closeAllPopups()
       })
@@ -102,7 +105,7 @@ function App() {
           throw new Error(error)
         })
     },
-    [cards],
+    [cards]
   )
 
   const handleUpdateAvatar = useCallback((user) => {
@@ -137,20 +140,21 @@ function App() {
       .catch(() => setUserStatus('error'))
   }, [])
 
-  const MainElement = <Main
-    onEditProfile={handleEditProfileClick}
-    onAddPlace={handleAddPlaceClick}
-    onEditAvatar={handleEditAvatarClick}
-    setSelectedCard={setSelectedCard}
-    userStatus={userStatus}
-    cards={cards}
-    cardsStatus={cardsStatus}
-    onCardLike={handleCardLike}
-    onCardDelete={handleRemoveCardClick}
-  />
+  const MainElement = (
+    <Main
+      onEditProfile={handleEditProfileClick}
+      onAddPlace={handleAddPlaceClick}
+      onEditAvatar={handleEditAvatarClick}
+      setSelectedCard={setSelectedCard}
+      userStatus={userStatus}
+      cards={cards}
+      cardsStatus={cardsStatus}
+      onCardLike={handleCardLike}
+      onCardDelete={handleRemoveCardClick}
+    />
+  )
 
-  const loggedIn = true
-
+  const loggedIn = false
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -207,6 +211,8 @@ function App() {
           />
         </>
       )}
+
+      <InfoTooltip isOpen={true} status={1} />
 
       <ImagePopup onClose={closeAllPopups} card={selectedCard} />
     </CurrentUserContext.Provider>

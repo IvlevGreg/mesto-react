@@ -14,7 +14,6 @@ export function ImagePopup({ card, className, onClose }) {
         className
       )}
       ref={popupRef}
-      //TODO: проверить что обработчик удаляется
       onMouseDown={(evt) => {
         if (evt.target === popupRef.current) onClose()
       }}
