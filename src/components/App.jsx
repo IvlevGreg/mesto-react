@@ -14,12 +14,15 @@ import { ProtectedRouteElement } from './ProtectedRouteElement'
 import { Login } from './Login'
 import { Register } from './Register'
 import { InfoTooltip } from './InfoTooltip'
+import { authApi } from '../utils/AuthApi'
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false)
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false)
+  const [infoTooltipError, setInfoTooltipError] = useState('')
   const [activeRemoveCardId, setActiveRemoveCardId] = useState(null)
   const [currentUser, setCurrentUser] = useState(null)
   const [userStatus, setUserStatus] = useState('initial')
@@ -50,6 +53,7 @@ function App() {
     setIsEditAvatarPopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsConfirmPopupOpen(false)
+    setIsInfoTooltipOpen(false)
 
     setSelectedCard(null)
   }, [])
@@ -120,6 +124,21 @@ function App() {
       })
   }, [])
 
+  const handleSignUp = useCallback((user) => {
+    setInfoTooltipError('')
+    authApi
+      .postSignUp(user)
+      .then((res) => {
+        //
+      })
+      .catch((error) => {
+        setInfoTooltipError('Некорректно заполнено одно из полей')
+
+        throw new Error(error)
+      })
+      .finally(() => setIsInfoTooltipOpen(true))
+  }, [])
+
   useEffect(() => {
     setUserStatus('loading')
     setCardsStatus('loading')
@@ -162,7 +181,7 @@ function App() {
 
       <Routes>
         <Route path="/sign-in" element={<Login />} />
-        <Route path="/sign-up" element={<Register />} />
+        <Route path="/sign-up" element={<Register onSubmit={handleSignUp} />} />
         <Route
           path="/"
           element={
@@ -212,7 +231,11 @@ function App() {
         </>
       )}
 
-      <InfoTooltip isOpen={true} status={1} />
+      <InfoTooltip
+        isOpen={isInfoTooltipOpen}
+        onClose={closeAllPopups}
+        error={infoTooltipError}
+      />
 
       <ImagePopup onClose={closeAllPopups} card={selectedCard} />
     </CurrentUserContext.Provider>

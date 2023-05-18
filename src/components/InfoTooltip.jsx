@@ -1,7 +1,9 @@
 import classNames from 'classnames'
+import { useRef } from 'react'
 
-export function InfoTooltip({ isOpen, className, onClose, status = 1 }) {
+export function InfoTooltip({ isOpen, className, onClose, error = '' }) {
   if (!isOpen) return null
+  const popupRef = useRef(null)
 
   return (
     <div
@@ -11,6 +13,10 @@ export function InfoTooltip({ isOpen, className, onClose, status = 1 }) {
         { popup_opened: isOpen },
         className
       )}
+      ref={popupRef}
+      onMouseDown={(evt) => {
+        if (evt.target === popupRef.current) onClose()
+      }}
     >
       <div className="popup__container popup__container_status">
         <button
@@ -22,13 +28,13 @@ export function InfoTooltip({ isOpen, className, onClose, status = 1 }) {
           className={classNames(
             'popup__result-img',
 
-            { 'popup__result-img_success': status },
-            { 'popup__result-img_error': !status },
+            { 'popup__result-img_success': !error },
+            { 'popup__result-img_error': error },
             className
           )}
         />
         <h2 className="popup__subtitle">
-          {status
+          {!error
             ? 'Вы успешно зарегистрировались!'
             : 'Что-то пошло не так!' + 'Попробуйте ещё раз.'}
         </h2>
