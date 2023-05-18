@@ -157,11 +157,25 @@ function App() {
       <Header />
 
       <Routes>
-        <Route path='/sign-in' element={<div>signin</div>} />
-        <Route path='/sign-up' element={<div>signup</div>} />
-        <Route path='*' element={<ProtectedRouteElement loggedIn={loggedIn}>{MainElement}</ProtectedRouteElement>} />
-        <Route path='/log-out'
-               element={<ProtectedRouteElement loggedIn={loggedIn}><h1>log-out</h1></ProtectedRouteElement>} />
+        <Route path="/sign-in" element={<Login />} />
+        <Route path="/sign-up" element={<Register />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRouteElement loggedIn={loggedIn}>
+              {MainElement}
+            </ProtectedRouteElement>
+          }
+        />
+        <Route path="*" element={<h1>Oops!... Not found</h1>} />
+        <Route
+          path="/log-out"
+          element={
+            <ProtectedRouteElement loggedIn={loggedIn}>
+              <h1> log-out</h1>
+            </ProtectedRouteElement>
+          }
+        />
       </Routes>
       <Footer />
 
