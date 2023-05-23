@@ -20,7 +20,7 @@ export class AuthApi {
   }
 
   postSignIn({ password, email }) {
-    return fetch(`${this._baseUrl}/signup`, {
+    return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
