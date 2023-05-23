@@ -1,8 +1,7 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export const Register = ({ onSubmit }) => {
-  const t = 1
-
   const [values, setValues] = useState({})
   const onChange = (e) => {
     console.log(values)
@@ -46,9 +45,9 @@ export const Register = ({ onSubmit }) => {
           >
             Зарегистрироваться
           </button>
-          <button type="button" className="popup-form__submit-button ">
+          <Link to="/sign-in" className="link">
             Уже зарегистрированы? Войти
-          </button>
+          </Link>
         </div>
       </form>
     </div>
