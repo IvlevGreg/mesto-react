@@ -9,7 +9,7 @@ import { EditProfilePopup } from './EditProfilePopup'
 import { EditAvatarPopup } from './EditAvatarPopup'
 import { AddPlacePopup } from './AddPlacePopup'
 import { ConfirmPopup } from './ConfirmPopup'
-import { Route, Routes } from 'react-router-dom'
+import { useNavigate, Route, Routes } from 'react-router-dom'
 import { ProtectedRouteElement } from './ProtectedRouteElement'
 import { Login } from './Login'
 import { Register } from './Register'
@@ -17,6 +17,27 @@ import { InfoTooltip } from './InfoTooltip'
 import { authApi } from '../utils/AuthApi'
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(null)
+
+  const handleUserCheck = useCallback(() => {
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    authApi
+      .getUsersMe(user.token)
+      .then((res) => {
+        setIsLoggedIn(true)
+        navigate('/')
+      })
+      .catch((error) => {
+        setIsLoggedIn(false)
+        throw new Error(error)
+      })
+  }, [])
+
+  useEffect(() => {
+    handleUserCheck()
+  }, [])
+
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
@@ -30,6 +51,8 @@ function App() {
   const [cardsStatus, setCardsStatus] = useState('initial')
 
   const [selectedCard, setSelectedCard] = useState(null)
+
+  const navigate = useNavigate()
 
   const handleEditProfileClick = useCallback(
     () => setIsEditProfilePopupOpen(true),
@@ -128,8 +151,27 @@ function App() {
     setInfoTooltipError('')
     authApi
       .postSignUp(user)
+      .catch((error) => {
+        setInfoTooltipError('Некорректно заполнено одно из полей')
+
+        throw new Error(error)
+      })
+      .finally(() => setIsInfoTooltipOpen(true))
+  }, [])
+
+  const handleSignIn = useCallback((user) => {
+    setInfoTooltipError('')
+    authApi
+      .postSignIn(user)
       .then((res) => {
-        //
+        setIsLoggedIn(true)
+        localStorage.setItem(
+          'user',
+          JSON.stringify({
+            ...res,
+          })
+        )
+        navigate('/')
       })
       .catch((error) => {
         setInfoTooltipError('Некорректно заполнено одно из полей')
@@ -173,19 +215,19 @@ function App() {
     />
   )
 
-  const loggedIn = false
+  if (isLoggedIn === null) return null
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header />
 
       <Routes>
-        <Route path="/sign-in" element={<Login />} />
+        <Route path="/sign-in" element={<Login onSubmit={handleSignIn} />} />
         <Route path="/sign-up" element={<Register onSubmit={handleSignUp} />} />
         <Route
           path="/"
           element={
-            <ProtectedRouteElement loggedIn={loggedIn}>
+            <ProtectedRouteElement loggedIn={isLoggedIn}>
               {MainElement}
             </ProtectedRouteElement>
           }
@@ -194,7 +236,7 @@ function App() {
         <Route
           path="/log-out"
           element={
-            <ProtectedRouteElement loggedIn={loggedIn}>
+            <ProtectedRouteElement loggedIn={isLoggedIn}>
               <h1> log-out</h1>
             </ProtectedRouteElement>
           }
