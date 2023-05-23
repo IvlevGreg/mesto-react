@@ -1,5 +1,16 @@
-export const Login = () => {
-  const t = 1
+import { useState } from 'react'
+
+export const Login = ({ onSubmit }) => {
+  const [values, setValues] = useState({})
+  const onChange = (e) => {
+    console.log(values)
+    setValues({ ...values, [e.target.attributes.name.value]: e.target.value })
+  }
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault()
+    onSubmit(values)
+  }
   return (
     <div className="page">
       <h2 className="page__title">Вход</h2>
@@ -9,16 +20,22 @@ export const Login = () => {
             className="popup-form__input popup-form__input_dark"
             placeholder="Email"
             name="email"
+            value={values.email || ''}
+            onChange={onChange}
           />
+
           <input
             className="popup-form__input popup-form__input_dark"
             placeholder="Пароль"
             name="password"
+            value={values.password || ''}
+            onChange={onChange}
           />
         </div>
 
         <button
           type="submit"
+          onClick={handleSubmit}
           className="popup-form__submit-button popup-form__submit-button_dark"
         >
           Войти
