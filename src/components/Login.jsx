@@ -29,6 +29,7 @@ export const Login = ({ onSubmit }) => {
             name="password"
             value={values.password || ''}
             onChange={onChange}
+            type="password"
           />
         </div>
 
