@@ -1,6 +1,11 @@
 .header {
   padding: 28px 30px;
   border-bottom: 1px solid var(--bor-section-color);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
 
 @media screen and (min-width: 700px) {

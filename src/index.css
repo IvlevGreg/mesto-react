@@ -204,3 +204,44 @@ body {
 .link:active {
     opacity: 0.6;
 }
+
+@media screen and (max-width: 520px) {
+    .header__email {
+        display: none;
+    }
+}
+
+.header__user {
+    display: flex;
+    gap: 24px;
+}
+
+.header__text {
+    font-size: 14px;
+    line-height: 17px;
+}
+
+@media screen and (min-width: 520px) {
+    .header__text {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}
+
+.header__link {
+    text-decoration: none;
+    color: var(--text-color-main);
+}
+
+.header__link:hover {
+    opacity: .8;
+}
+
+.header__link:focus {
+    opacity: .6;
+}
+
+.header__text_gray {
+    color: #A9A9A9;
+}
+

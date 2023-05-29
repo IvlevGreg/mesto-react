@@ -2,9 +2,9 @@ import classNames from 'classnames'
 import { useRef } from 'react'
 
 export function InfoTooltip({ isOpen, className, onClose, error = '' }) {
-  if (!isOpen) return null
   const popupRef = useRef(null)
 
+  if (!isOpen) return null
   return (
     <div
       className={classNames(

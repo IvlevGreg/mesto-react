@@ -3,7 +3,6 @@ import { useState } from 'react'
 export const Login = ({ onSubmit }) => {
   const [values, setValues] = useState({})
   const onChange = (e) => {
-    console.log(values)
     setValues({ ...values, [e.target.attributes.name.value]: e.target.value })
   }
 
@@ -30,6 +29,7 @@ export const Login = ({ onSubmit }) => {
             name="password"
             value={values.password || ''}
             onChange={onChange}
+            type="password"
           />
         </div>
 
