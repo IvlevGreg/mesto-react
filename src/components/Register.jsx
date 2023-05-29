@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 export const Register = ({ onSubmit }) => {
   const [values, setValues] = useState({})
   const onChange = (e) => {
-    console.log(values)
     setValues({ ...values, [e.target.attributes.name.value]: e.target.value })
   }
 
