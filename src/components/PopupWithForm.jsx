@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { useRef, useEffect } from 'react'
+import {useRef, useEffect, useCallback} from 'react'
 
 export function PopupWithForm({
   children,
@@ -16,18 +16,18 @@ export function PopupWithForm({
   const handleSubmit = (e) => {
     onSubmit(e)
   }
-  function handleEscClose(evt) {
-    if (evt.key == 'Escape') {
+  const handleEscClose = useCallback((evt)=> {
+    if (evt.key === 'Escape') {
       onClose()
     }
-  }
+  },[onClose])
 
   useEffect(() => {
     window.addEventListener('keydown', handleEscClose)
     return () => {
       window.removeEventListener('keydown', handleEscClose)
     }
-  }, [])
+  }, [handleEscClose])
 
   return (
     <div

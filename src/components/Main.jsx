@@ -18,7 +18,7 @@ export function Main({
 
   const onCardClick = useCallback((card) => {
     setSelectedCard(card)
-  }, [])
+  }, [setSelectedCard])
 
   return (
     <main className="main">

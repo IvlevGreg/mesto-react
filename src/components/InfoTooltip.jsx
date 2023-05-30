@@ -36,7 +36,7 @@ export function InfoTooltip({ isOpen, className, onClose, error = '' }) {
         <h2 className="popup__subtitle">
           {!error
             ? 'Вы успешно зарегистрировались!'
-            : 'Что-то пошло не так!' + 'Попробуйте ещё раз.'}
+            : 'Что-то пошло не так! Попробуйте ещё раз.'}
         </h2>
       </div>
     </div>

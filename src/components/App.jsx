@@ -18,6 +18,7 @@ import {authApi} from '../utils/AuthApi'
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(null)
+    const [userEmail, setUserEmail] = useState(null)
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
@@ -42,18 +43,18 @@ function App() {
             .getUsersMe(user.token)
             .then((res) => {
                 setIsLoggedIn(true)
+                setUserEmail(res.data.email)
                 navigate('/')
             })
             .catch((error) => {
                 setIsLoggedIn(false)
                 throw new Error(error)
             })
-    }, [])
-
+    }, [navigate])
 
     useEffect(() => {
         handleUserCheck()
-    }, [])
+    }, [handleUserCheck])
 
     useEffect(() => {
         if (!isLoggedIn) return
@@ -123,7 +124,7 @@ function App() {
             .catch((error) => {
                 throw new Error(error)
             })
-    })
+    }, [])
 
     const handleCardDelete = useCallback(() => {
         api
@@ -137,7 +138,7 @@ function App() {
             .catch((error) => {
                 throw new Error(error)
             })
-    })
+    }, [activeRemoveCardId, closeAllPopups])
 
     const handleUpdateUser = useCallback((user) => {
         api
@@ -149,7 +150,7 @@ function App() {
             .catch((error) => {
                 throw new Error(error)
             })
-    }, [])
+    }, [closeAllPopups])
 
     const handleAddPlaceSubmit = useCallback(
         (card) => {
@@ -163,7 +164,7 @@ function App() {
                     throw new Error(error)
                 })
         },
-        [cards]
+        [cards, closeAllPopups]
     )
 
     const handleUpdateAvatar = useCallback((user) => {
@@ -176,7 +177,7 @@ function App() {
             .catch((error) => {
                 throw new Error(error)
             })
-    }, [])
+    }, [closeAllPopups])
 
     const handleSignUp = useCallback((user) => {
         setInfoTooltipError('')
@@ -189,7 +190,7 @@ function App() {
                 throw new Error(error)
             })
             .finally(() => setIsInfoTooltipOpen(true))
-    }, [])
+    }, [navigate])
 
     const handleSignIn = useCallback((user) => {
         setInfoTooltipError('')
@@ -210,9 +211,7 @@ function App() {
 
                 throw new Error(error)
             })
-    }, [])
-
-    // if (isLoggedIn === null) return null
+    }, [navigate])
 
     const MainElement = (
         <Main
@@ -230,7 +229,7 @@ function App() {
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
-            <Header isLoggedIn={isLoggedIn} handleLogOut={handleLogOut}/>
+            <Header isLoggedIn={isLoggedIn} handleLogOut={handleLogOut} email={userEmail}/>
 
             <Routes>
                 <Route path="/sign-in" element={<Login onSubmit={handleSignIn}/>}/>
